@@ -38,8 +38,11 @@ def help_fun():
     # engine.runAndWait()
 
     # tts = gTTS('أولا ، يجب ألا تنام. ثانيًا ، تجنب رفع عينيك عن الطريق. ثالثًا ، تجنب وضع يدك بالقرب من العين لتجنب زيادة النقاط العمياء', lang='ar')
+    #
     # tts.save('notes.mp3')
     # os.system("notes.mp3")
+    
+    #To Play Sound tutorial in the first of th program
     
     playsound.playsound('notes.mp3', True)
 
@@ -53,7 +56,8 @@ def alarm_1():
     # tts = gTTS(' أستيقظ او خذ أستراحة', lang='ar')
     # tts.save('wake_up.mp3')
     # os.system("wake_up.mp3")
-
+    
+    #Alarm Sound To Wake Up When first Viol. is happend;
     playsound.playsound('wake_up.mp3', True)
 
 def alarm_for_upper_left_hand():
@@ -65,6 +69,8 @@ def alarm_for_upper_left_hand():
     # tts.save('lower_right.mp3')
     # os.system("lower_right.mp3")
 
+    
+    #Alarm Sound To Down Driver's Right hand When he rise his Right hand;
     playsound.playsound('lower_right.mp3', True)
 
 def alarm_for_upper_right_hand():
@@ -76,6 +82,7 @@ def alarm_for_upper_right_hand():
     # tts.save('lower_left.mp3')
     # os.system("lower_left.mp3")
 
+    #Alarm Sound To Down Driver's Right hand When he rise his Right hand;
     playsound.playsound('lower_left.mp3', True)
 
 def alarm_for_paying_attention_left():
@@ -87,6 +94,7 @@ def alarm_for_paying_attention_left():
     # tts.save('attention_to_roud.mp3')
     # os.system("attention_to_roud.mp3")
 
+    #Alarm Sound To Make Driver look forward to the road ;
     playsound.playsound('attention_to_roud.mp3', True)
 
 
@@ -97,7 +105,7 @@ holistic = mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confi
 # print('------------> ',mp_holistic)
 # print('-----------> ',holistic)
 
-
+#detect points of Eyes To detect sleep Error for driver
 def calculate_EAR(eye):
     A = distance.euclidean(eye[1], eye[5])
     B = distance.euclidean(eye[2], eye[4])
@@ -135,11 +143,12 @@ def stream_1():
     # type of the font
     font = cv2.FONT_HERSHEY_SIMPLEX
     
+    #create Thread to play the Alarms
     alarm_flag = False
     alarm_1_var = threading.Thread()
 
 
-
+    #open the camera to capture Video Stream to detect the drivers error
     cam_id = 0
     vid = cv2.VideoCapture(0)
     while True:
@@ -158,6 +167,7 @@ def stream_1():
         # print(results.face_landmarks[0])
         
         if results.face_landmarks :
+            #detect the Eyes to take action when driver sleep
             left_eye = []
             for id, lm in enumerate(results.face_landmarks.landmark):
                 # print(id, lm)
@@ -201,6 +211,7 @@ def stream_1():
             left_side = calculate_EAR(left_eye)
             left_side = round(left_side,2)
             print("the ratio : ",left_side)
+            #if the Eye ratio is less than 0.28 then the driver's eyes is closed else the driver's eye is open
             if left_side<0.28:
                 cv2.putText(image, "closed", (50, 50), font, 3, (0, 0, 255), 2, cv2.LINE_4)
                 if(alarm_flag == False):
@@ -217,6 +228,7 @@ def stream_1():
                 alarm_flag = False
 
         # # 2. pose estimation landmarks
+        # the Second Viol. if the driver looks right or left the program gives him alarm
         mp_drawing.draw_landmarks( image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS, black, white)
         # print(results.pose_landmarks)
         if results.pose_landmarks:
@@ -285,6 +297,7 @@ def stream_1():
                 if not alarm_1_var.is_alive() :
                     alarm_flag = False
         #-math.hypot(x2-x1 , y2-y1)------------------note : use math.hypot to get length--------------- يمين و شمال الحساب باستخدام نقطين بس--------------------
+        #determine the angle between the eye and ear to detect which side the driver look
                 if id==0:
                     # print(id, cx, cy)
                     x_y_left_eye_outer = (cx, cy)
