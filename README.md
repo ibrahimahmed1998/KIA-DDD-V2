@@ -35,6 +35,7 @@ Both driver drowsiness and distraction, however, might have the same effects, th
 - Based on acquisition of video from the camera that is in front of driver perform real-time processing of an incoming video stream in order to infer the driver’s level of fatigue if the drowsiness is estimated then it will give the alert by sensing the eyes.
 - Mediapipe framework : which is an open source framework created by google and it has a lot of module for computer vision problems.
 - Django framework : which is also an open source backend framework that allow us to present our models in efficient way.
+
 ![example_1](https://user-images.githubusercontent.com/51359449/134506521-d3541fd9-42ce-4b63-b654-c4e28e93b263.PNG)
 
 ## Methodology
